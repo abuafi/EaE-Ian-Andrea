@@ -14,4 +14,8 @@ public final class BubbleSortPassPerItem<T extends Comparable<T>> implements Sor
 		}
 	}
 
+	public String toString() {
+		return "BubbleSort Pass Per Item";
+	}
+
 }

@@ -18,4 +18,8 @@ public final class BubbleSortWhileNeeded<T extends Comparable<T>> implements Sor
 
 	}
 
+	public String toString() {
+		return "BubbleSort While Needed";
+	}
+
 }

@@ -15,4 +15,8 @@ public final class BubbleSortUntilNoChange<T extends Comparable<T>> implements S
 		} while (changed);
 	}
 
+	public String toString() {
+		return "BubbleSort Until No Change";
+	}
+
 }
