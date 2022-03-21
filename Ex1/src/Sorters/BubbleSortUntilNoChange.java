@@ -1,3 +1,5 @@
+package Sorters;
+
 public final class BubbleSortUntilNoChange<T extends Comparable<T>> implements Sorter<T> {
 
 	public void sort(final T[] items) {

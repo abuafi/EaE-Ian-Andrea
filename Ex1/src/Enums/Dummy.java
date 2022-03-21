@@ -1,3 +1,5 @@
+package Enums;
+
 public class Dummy implements Comparable<Dummy> {
 
     private final Integer i;
