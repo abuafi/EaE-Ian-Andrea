@@ -3,15 +3,9 @@ import Sorters.*;
 
 public enum Algorithm {
 
-   BSPPI(BubbleSortUntilNoChange.class),
-   BSWN(BubbleSortWhileNeeded.class),
-   BSUNC(BubbleSortUntilNoChange.class);
-
-   private final Class<? extends Sorter> c;
-
-   Algorithm(Class<? extends Sorter> c) {
-       this.c = c;
-   }
+   BSPPI(),
+   BSWN(),
+   BSUNC();
 
    public <T extends Comparable<T>> Sorter<T> create(Class<T> c) {
       return switch (this) {

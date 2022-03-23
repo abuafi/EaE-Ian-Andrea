@@ -1,46 +1,48 @@
 import Enums.Algorithm;
 import Enums.ArraySize;
-import Enums.Dummy;
-import Enums.Types;
-import Sorters.BubbleSortUntilNoChange;
+import Enums.ArrayStatus;
+import Enums.Type;
 import Sorters.Sorter;
 
-import java.lang.reflect.GenericDeclaration;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import org.json.*;
 
 public class Instance<T extends Comparable<T>> {
-
-    Types<T> type;
+    Type<T> type;
     Algorithm algo;
     ArraySize size;
+    ArrayStatus status;
 
-    public Instance(Types<T> type, Algorithm algo, ArraySize size) {
+    private final Random random = new Random(0);
+
+    public Instance(Type<T> type, Algorithm algo, ArraySize size, ArrayStatus status) {
         this.type = type;
         this.algo = algo;
         this.size = size;
+        this.status = status;
     }
 
-    public static void main(String[] args) {
-        int i = 0;
-        List<Instance<?>> sorters = new ArrayList<>();
-        sorters.add(new Instance<>(Types.INTEGER, Algorithm.BSUNC, ArraySize.LARGE));
-
-
-        sorters.forEach(Instance::run);
-    }
-
-    public void run() {
+    public List<Long> run() {
+        List<Long> times = new ArrayList<>();
         Sorter<T> sorter = algo.create(type.getC());
-        T[] list = type.elements(size);
-        long start = System.nanoTime();
-        sorter.sort(list);
-        long end = System.nanoTime();
-        System.out.println(end - start);
+        int iterations = 10;
+        while(iterations > 0) {
+            T[] list = type.elements(size, status, random);
+            long start = System.nanoTime();
+            sorter.sort(list);
+            long end = System.nanoTime();
+            times.add(end - start);
+            iterations--;
+        }
+        System.out.println(toString());
+        return times;
+    }
 
+    public String toString() {
+        return algo + " " + size + " " + type.name() + " " + status;
     }
 
 }
