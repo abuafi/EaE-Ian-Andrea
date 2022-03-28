@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        int i = 0;
+        long start = System.nanoTime();
         JSONObject json_a = new JSONObject();
         for (Algorithm algorithm : Algorithm.values()) {
             JSONObject json_t = new JSONObject();
@@ -32,7 +32,7 @@ public class Main {
         BufferedWriter writer = new BufferedWriter(new FileWriter("output.json"));
         writer.write(json_a.toString());
         writer.close();
-        System.out.println("Process completed!");
+        System.out.println("Process completed in " + (System.nanoTime() - start) + "ns!");
     }
 
 }

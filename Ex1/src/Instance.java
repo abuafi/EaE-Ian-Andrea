@@ -5,10 +5,8 @@ import Enums.Type;
 import Sorters.Sorter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import org.json.*;
 
 public class Instance<T extends Comparable<T>> {
     Type<T> type;
@@ -28,7 +26,7 @@ public class Instance<T extends Comparable<T>> {
     public List<Long> run() {
         List<Long> times = new ArrayList<>();
         Sorter<T> sorter = algo.create(type.getC());
-        int iterations = 10;
+        int iterations = 500;
         while(iterations > 0) {
             T[] list = type.elements(size, status, random);
             long start = System.nanoTime();
