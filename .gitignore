@@ -2,4 +2,4 @@
 .DS_Store
 out/
 Experiment1.iml
-/figures/*.eps
+/figures/*.png

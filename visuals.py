@@ -30,7 +30,7 @@ for typeS in typeOfSorter:
       _ = plt.plot(numpy_array_2, 'g.', label="BubbleSortWhileNeeded")
       _ = plt.plot(numpy_array_3, 'b.', label="BubbleSortUntilNoChange")
       plt.legend()
-      plt.savefig(f"figures/{typeS}_{sizeL}_{stat}_PLOT.eps")
+      plt.savefig(f"figures/{typeS}_{sizeL}_{stat}_PLOT.png")
       plt.close()
 
 for typeS in typeOfSorter:
@@ -55,5 +55,6 @@ for typeS in typeOfSorter:
         labels += [f"{algo}\n{sizeL}"]
     plt.ylabel("Time per item (ns)")
     plt.xticks(ticks, labels)
-    plt.savefig(f"figures/{typeS}_{stat}_BOX.eps")
+    plt.title(f"{typeS}, {stat}")
+    plt.savefig(f"figures/{typeS}_{stat}_BOX.png")
     plt.close()
