@@ -1,7 +1,7 @@
 import json 
 import numpy as np
 import matplotlib.pyplot as plt
-import math
+import os
 
 jj = open("output.json").read()
 
@@ -17,11 +17,14 @@ data = json.loads(jj)
 
 print(f"{'%-27s' % 'Instance variables'}: \
 {'%-15s' % 'Minimum'} \
-{'%-15s' % 'First quantile'} \
+{'%-15s' % 'First quartile'} \
 {'%-15s' % 'Median'} \
-{'%-15s' % 'Third quantile'} \
+{'%-15s' % 'Third quartile'} \
 {'%-15s' % 'Maximum'}")
 print(f"{'-' * 102}")
+
+if not os.path.exists("figures"):
+  os.makedirs("figures")
 
 for typeS in typeOfSorter:
   for stat in statusList:
