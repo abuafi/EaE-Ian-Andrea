@@ -16,6 +16,9 @@ public class Instance<T extends Comparable<T>> {
 
     private final Random random = new Random(0);
 
+    /**
+     * An Instance is an object that holds a certain permutations of the independent variables.
+      */
     public Instance(Type<T> type, Algorithm algo, ArraySize size, ArrayStatus status) {
         this.type = type;
         this.algo = algo;
@@ -23,6 +26,10 @@ public class Instance<T extends Comparable<T>> {
         this.status = status;
     }
 
+    /**
+     * Runs the sorting algorithm 500 times and records the time taken for each.
+     * @return the List of the 500 times in nanoseconds as Longs
+     */
     public List<Long> run() {
         List<Long> times = new ArrayList<>();
         Sorter<T> sorter = algo.create(type.getC());

@@ -3,3 +3,4 @@
 out/
 Experiment1.iml
 /figures/*.png
+**/*.class

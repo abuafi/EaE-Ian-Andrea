@@ -20,7 +20,9 @@ public class Main {
                 for (ArraySize size : ArraySize.values()) {
                     JSONObject json_st = new JSONObject();
                     for (ArrayStatus status : ArrayStatus.values()) {
+                        // Generate the Instance given the variables
                         Instance<?> in = new Instance<>(type, algorithm, size, status);
+                        // Run the Instance and store the results in a Json Object
                         json_st.put(status.name(), in.run());
                     }
                     json_si.put(size.name(), json_st);
@@ -29,6 +31,7 @@ public class Main {
             }
             json_a.put(algorithm.name(), json_t);
         }
+        // Write the Json Object into the output.json file
         BufferedWriter writer = new BufferedWriter(new FileWriter("output.json"));
         writer.write(json_a.toString());
         writer.close();

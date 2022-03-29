@@ -15,6 +15,14 @@ COLOR = {"SMALL": 'r', "MEDIUM": 'g', "LARGE": 'b'}
 
 data = json.loads(jj)
 
+print(f"{'%-27s' % 'Instance variables'}: \
+{'%-15s' % 'Minimum'} \
+{'%-15s' % 'First quantile'} \
+{'%-15s' % 'Median'} \
+{'%-15s' % 'Third quantile'} \
+{'%-15s' % 'Maximum'}")
+print(f"{'-' * 102}")
+
 for typeS in typeOfSorter:
   for stat in statusList:
     for sizeL in sizeOfList:
@@ -32,6 +40,15 @@ for typeS in typeOfSorter:
       plt.legend()
       plt.savefig(f"figures/{typeS}_{sizeL}_{stat}_PLOT.png")
       plt.close()
+
+      for algo in algorithms:
+        arr = data[algo][typeS][sizeL][stat]
+        print(f"{'%-7s' % typeS} {'%-3s' % stat} {'%-7s' % sizeL} {'%-7s' % algo}: \
+{'%-15s' % np.min(arr)} \
+{'%-15s' % np.quantile(arr, .25)} \
+{'%-15s' % np.median(arr)} \
+{'%-15s' % np.quantile(arr, .75)} \
+{'%-15s' % np.max(arr)}")
 
 for typeS in typeOfSorter:
   for stat in statusList:
