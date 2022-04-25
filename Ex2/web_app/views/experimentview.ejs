@@ -1,0 +1,35 @@
+<body>
+    <h1>
+        <% for(w of words) { %>
+            <%= w %>
+        <% } %>
+    </h1>
+    <% 
+    function kebabcase(words) {
+        first = words[0]
+        s = first
+        for(w of words.slice(1)) {
+            s += "-" + w
+        }
+        return s
+    }
+    function camelcase(words) {
+        first = words[0]
+        return first + words.slice(1).map(a => a[0].toUpperCase() + a.substring(1)).join("")
+    }
+    %> 
+    <button onclick="run()">
+        <%= kebabcase(words) %>
+        <%= camelcase(words) %>
+    </button>
+    
+</body>
+<script>
+    window.onload = async () => {
+        console.log(window.performance.now())
+    }
+    function run() {
+        console.log(window.performance.now())
+    }
+
+</script>
