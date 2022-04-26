@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
+var csv = require('csv-parser')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +23,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+var words = []
+fs.createReadStream("./public/words.csv")
+  .pipe(csv())
+  .on('data', (data) => {
+    v = []
+    for (d in data) { v.push(data[d]) }
+    words.push(v) 
+  })
+
+app.get(`/words`, async function(req, res) {
+  i = parseInt(req.query.i) || 0
+  if (i >= words.length || i < 0) res.status(400).end()
+  else {
+    res.json(words[i])
+  }
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

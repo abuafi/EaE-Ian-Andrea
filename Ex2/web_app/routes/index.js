@@ -1,4 +1,5 @@
-var parse = require('csv-parse')
+var fs = require('fs')
+// var fetch = require('node-fetch')
 var express = require('express');
 var router = express.Router();
 
@@ -9,8 +10,8 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET testing page. */
-router.get('/run', function(req, res, next) {
-  res.render('experimentview.ejs', { words: ['hello', 'world'] });
+router.get('/run',async function(req, res, next) {
+  res.render('experimentview.ejs', { words: ['hello,world,ciao,mondo'] });
 });
 
 module.exports = router;

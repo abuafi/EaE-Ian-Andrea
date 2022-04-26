@@ -1,11 +1,32 @@
 <body>
-    <h1>
-        <% for(w of words) { %>
-            <%= w %>
-        <% } %>
-    </h1>
-    <% 
-    function kebabcase(words) {
+    <h1 id="wordsTitle"></h1>
+    <div id="buttonBox" style="display:none;">
+        <button class="option" id="option1" onclick="clickOption(0)"></button>
+        <button class="option" id="option2" onclick="clickOption(1)"></button>
+        <button class="option" id="option3" onclick="clickOption(2)"></button>
+        <button class="option" id="option4" onclick="clickOption(3)"></button>
+    </div>
+    <button id="startButton" onclick="show()">
+    Start
+    </button>
+</body>
+
+<script>
+    var index = 0;
+    var wordSet;
+    var startTime;
+    var correctIndex;
+    var startButton = document.getElementById("startButton")
+    var wordsTitle = document.getElementById("wordsTitle")
+    var buttonBox = document.getElementById("buttonBox")
+    var options = [
+        document.getElementById("option1"),
+        document.getElementById("option2"),
+        document.getElementById("option3"),
+        document.getElementById("option4"),
+    ]
+    function kebabcase(w) {
+        words = w.split(" ")
         first = words[0]
         s = first
         for(w of words.slice(1)) {
@@ -13,23 +34,58 @@
         }
         return s
     }
-    function camelcase(words) {
+    function camelcase(w) {
+        words = w.split(" ")
         first = words[0]
         return first + words.slice(1).map(a => a[0].toUpperCase() + a.substring(1)).join("")
     }
-    %> 
-    <button onclick="run()">
-        <%= kebabcase(words) %>
-        <%= camelcase(words) %>
-    </button>
-    
-</body>
-<script>
-    window.onload = async () => {
-        console.log(window.performance.now())
+    function normalCase(w) {
+        words = w.split(" ")
+        return words.map(a => a[0].toUpperCase() + a.substring(1)).join(" ")
     }
-    function run() {
-        console.log(window.performance.now())
+    var style = camelcase
+    async function fetchWordSet() {
+        console.log("fetchWordSet")
+        res = await fetch(`/words?i=${index}`)
+        console.log(res)
+        if (res.ok) {
+            wordSet = await res.json()
+            correctIndex = Math.floor(Math.random() * 4)
+            style = Math.random() - 0.5 > 0 ? camelcase : kebabcase
+            index++;
+        } else {
+            window.location.href = "/"
+        }
     }
-
+    function showCorrect() {
+        buttonBox.style.display = "none"
+        wordsTitle.textContent = normalCase(wordSet[0])
+    }
+    function showOptions() {
+        buttonBox.style.display = "flex"
+        ws = wordSet.slice(1)
+        ws.splice(correctIndex, 0, wordSet[0])
+        i = 0
+        for (option of options) {
+            option.textContent = style(ws[i++])
+        }
+    }
+    function clickOption(i) {
+        console.log(i == correctIndex, window.performance.now() - startTime, style.name, correctIndex)
+        run()
+    }
+    function show() {
+        startTime = window.performance.now()
+        startButton.style.display = "none"
+        showOptions()
+    }
+    async function run() {
+        buttonBox.style.display = "none"
+        startButton.style.display = "flex"
+        await fetchWordSet()
+        showCorrect()
+    }
+    window.onload = () => {
+        run()
+    }
 </script>
