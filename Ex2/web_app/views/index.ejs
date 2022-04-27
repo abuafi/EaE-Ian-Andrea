@@ -12,52 +12,95 @@
     <h2>which is better ?</h2>
 
     <div class="description">
-        <p>Description of the experiment </p>
+        <p>.........................</p>
     </div>
 
     <div class="grid">
 
-        <div class="column"></div>
+       <div class="container">
+	
+        <h3>Choose your age group:</h3>
+        
+      <ul>
+      <li>
+        <input type="radio" id="f-option" name="selector">
+        <label for="f-option">16-20</label>
+        
+        <div class="check"></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="s-option" name="selector">
+        <label for="s-option">21-24</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="t-option" name="selector">
+        <label for="t-option">25-...</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+    </ul>
+    </div>
 
 
-
-        <div class="column">
-            <p>Choose your age group:</p>
-        <form>
-            <input type="radio" id="one" name="age" value="18">
-            <label for="one">one</label><br>
-            <input type="radio" id="two" name="age" value="25">
-            <label for="two">two</label><br>
-            <input type="radio" id="three" name="age" value="30">
-            <label for="three">three</label>
-        </form>
-
-        <p>Have you ever programmed:</p>
-        <form>
-            <input type="radio" id="one" name="age" value="18">
-            <label for="one">Yes</label><br>
-            <input type="radio" id="two" name="age" value="25">
-            <label for="two">No</label><br>
-        </form>
-
-        <p>If yes, how much ?</p>
-        <form>
-            <input type="radio" id="one" name="age" value="18">
-            <label for="one">Once</label><br>
-            <input type="radio" id="two" name="age" value="25">
-            <label for="two">More than 5 times</label><br>
-            <input type="radio" id="two" name="age" value="25">
-            <label for="two">Less than 5 times</label><br>
-        </form>
-        </div>
-
-
-        <div class="column"></div>
-      </div>
-
-      <br><br>
     <div class="container">
-        <form method="" action="/page2">
+	
+        <h3>Have you ever programmed?</h3>
+        
+      <ul>
+      <li>
+        <input type="radio" id="yes" name="hp">
+        <label for="yes">Yes</label>
+        
+        <div class="check"></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="no" name="hp">
+        <label for="no">No</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      
+    </ul>
+    </div>
+
+    <div class="container">
+	
+        <h3>If yes, how much ?</h3>
+        
+      <ul>
+      <li>
+        <input type="radio" id="once" name="hm">
+        <label for="once">Once</label>
+        
+        <div class="check"></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="lt5" name="hm">
+        <label for="lt5">Less than 5 times</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+      
+      <li>
+        <input type="radio" id="mt5" name="hm">
+        <label for="mt5">More than 5 times</label>
+        
+        <div class="check"><div class="inside"></div></div>
+      </li>
+    </ul>
+    </div>
+   
+    </div>
+
+      <br><br><br><br>
+    <div class="contain">
+        <form method="" action="/run">
         <button id="btnStart" type="submit">Start TEST</button>
     </form>
     </div>
