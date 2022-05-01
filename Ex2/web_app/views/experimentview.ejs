@@ -13,9 +13,11 @@
 
 <script>
     var index = 0;
-    var wordSet;
+    var wordArray;
     var startTime;
     var correctIndex;
+    var indexSet;
+    var caseSet;
     var startButton = document.getElementById("startButton")
     var wordsTitle = document.getElementById("wordsTitle")
     var buttonBox = document.getElementById("buttonBox")
@@ -45,12 +47,14 @@
     }
     var style = camelcase
     async function fetchWordSet() {
-        console.log("fetchWordSet")
         res = await fetch(`/words?i=${index}`)
         console.log(res)
         if (res.ok) {
-            wordSet = await res.json()
-            correctIndex = Math.floor(Math.random() * 4)
+            let json = await res.json()
+            wordArray = json["words"]
+            correctIndex = parseInt(json[indexSet])
+            console.log(wordArray)
+            console.log(correctIndex)
             style = Math.random() - 0.5 > 0 ? camelcase : kebabcase
             index++;
         } else {
@@ -59,12 +63,12 @@
     }
     function showCorrect() {
         buttonBox.style.display = "none"
-        wordsTitle.textContent = normalCase(wordSet[0])
+        wordsTitle.textContent = normalCase(wordArray[0])
     }
     function showOptions() {
         buttonBox.style.display = "flex"
-        ws = wordSet.slice(1)
-        ws.splice(correctIndex, 0, wordSet[0])
+        ws = wordArray.slice(1)
+        ws.splice(correctIndex, 0, wordArray[0])
         i = 0
         for (option of options) {
             option.textContent = style(ws[i++])
@@ -86,6 +90,9 @@
         showCorrect()
     }
     window.onload = () => {
+        let params = new URLSearchParams(window.location.search)
+        indexSet = parseInt(params.get('is')) || Math.floor(Math.random() * 2) + 1;
+        indexSet = "is" + indexSet--
         run()
     }
 </script>

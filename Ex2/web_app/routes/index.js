@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 /* GET testing page. */
 router.get('/run',async function(req, res, next) {
-  res.render('experimentview.ejs', { words: ['hello,world,ciao,mondo'] });
+  res.render('experimentview.ejs');
 });
 
 module.exports = router;

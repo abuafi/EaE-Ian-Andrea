@@ -28,9 +28,12 @@ var words = []
 fs.createReadStream("./public/words.csv")
   .pipe(csv())
   .on('data', (data) => {
-    v = []
-    for (d in data) { v.push(data[d]) }
-    words.push(v) 
+    new_data = {"words": []}
+    for (d in data) {
+      if (d[0] == "_") new_data["words"].push(data[d])
+      else new_data[d] = data[d]
+      }
+    words.push(new_data) 
   })
 
 app.get(`/words`, async function(req, res) {
