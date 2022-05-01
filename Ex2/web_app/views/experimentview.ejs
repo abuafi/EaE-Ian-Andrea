@@ -53,11 +53,13 @@
             let json = await res.json()
             wordArray = json["words"]
             correctIndex = parseInt(json[indexSet])
-            console.log(wordArray)
-            console.log(correctIndex)
             style = Math.random() - 0.5 > 0 ? camelcase : kebabcase
             index++;
         } else {
+            //todo remove this line
+            localStorage.setItem("i", 0)
+            fetch('/data', {method:"PATCH", body:localStorage.getItem("final")})
+            localStorage.removeItem("final")
             window.location.href = "/"
         }
     }
@@ -75,7 +77,12 @@
         }
     }
     function clickOption(i) {
-        console.log(i == correctIndex, window.performance.now() - startTime, style.name, correctIndex)
+        let final = localStorage.getItem("final")
+        final = JSON.parse(final) || []
+        final.push({"correct": i == correctIndex, "time": window.performance.now() - startTime, "style": style.name, "correctI": correctIndex})
+        console.log(final)
+        localStorage.setItem("final", JSON.stringify(final))
+        localStorage.setItem("i", index)
         run()
     }
     function show() {
@@ -91,6 +98,7 @@
     }
     window.onload = () => {
         let params = new URLSearchParams(window.location.search)
+        index = localStorage.getItem("i") || 0
         indexSet = parseInt(params.get('is')) || Math.floor(Math.random() * 2) + 1;
         indexSet = "is" + indexSet--
         run()
