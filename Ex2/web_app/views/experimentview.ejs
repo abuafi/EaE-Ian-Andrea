@@ -16,6 +16,9 @@
         <p>
             Before you begin the experiment, you can see how it works by trying it in a test environment.
         </p>
+
+        <br><br><br>
+
         <div class="buttonRow">
             <button id="startExperimentButton" onclick="start()">
                 Start Experiment
@@ -25,9 +28,14 @@
             </button>
         </div>
     </div>
+
+
+    
+
     <div id="experiment" style="display:none;">
        
         <h1 id="wordsTitle" class="mono"></h1>
+        <br><br><br>
         <div id="buttonBox" style="display:none;" class="buttonRow mono">
             <button class="option" id="option1" onclick="clickOption(0)"></button>
             <button class="option" id="option2" onclick="clickOption(1)"></button>
@@ -166,7 +174,7 @@
     }
     async function run() {
         buttonBox.style.display = "none"
-        startButton.style.display = "flex"
+        startButton.style.display = "block"
         await fetchWordSet()
         showCorrect()
     }

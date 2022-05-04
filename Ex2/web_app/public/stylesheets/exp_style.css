@@ -1,4 +1,5 @@
-#desc, #experiment {
+#desc,
+#experiment {
   display: flex;
   flex-direction: column;
 }
@@ -6,8 +7,39 @@
 .buttonRow {
   display: flex;
   justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
 }
 
-.mono *, .mono {
-  font-family:monospace
+.mono *,
+.mono {
+  font-family: monospace
+}
+
+button {
+
+  width: 300px;
+  height: 70px;
+  position: relative;
+  background: #3a096e;
+  /* background: #280a49; */
+  /* background: #340f5c; */
+  margin-bottom: 25px;
+  border-radius: 20px;
+  border: none;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  /*   box-shadow: -4px -4px 6px rgba(255, 255, 255, 0.8),
+          4px 4px 6px rgba(0, 0, 0, 0.2); */
+}
+
+button:hover {
+
+  box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.5),
+    inset 6px 6px 12px rgba(0, 0, 0, 0.1);
+
 }
