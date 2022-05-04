@@ -6,6 +6,8 @@
         <p>
             In this experiment you will see a sequence of words on the screen. 
             Then, when you click Start, 4 different spellings of that sequence will appear in either camel case or kebab case.
+        </p>
+        <p>
             Your goal is to click on the correct spelling as quickly as possible.
         </p>
         <p>
@@ -44,12 +46,13 @@
 <script>
     var testing = 0
     var uid
-    var index = 0;
+    var index;
     var wordArray;
     var startTime;
     var correctIndex;
     var indexSet;
     var caseSet;
+    var params;
     var startButton = document.getElementById("startButton")
     var wordsTitle = document.getElementById("wordsTitle")
     var buttonBox = document.getElementById("buttonBox")
@@ -65,7 +68,7 @@
         document.getElementById("option4"),
     ]
     function kebabcase(w) {
-        words = w.split(" ")
+        let words = w.split(" ")
         first = words[0]
         s = first
         for(w of words.slice(1)) {
@@ -74,12 +77,12 @@
         return s
     }
     function camelcase(w) {
-        words = w.split(" ")
+        let words = w.split(" ")
         first = words[0]
         return first + words.slice(1).map(a => a[0].toUpperCase() + a.substring(1)).join("")
     }
     function normalCase(w) {
-        words = w.split(" ")
+        let words = w.split(" ")
         return words.map(a => a[0].toUpperCase() + a.substring(1)).join(" ")
     }
     var style = camelcase
@@ -91,13 +94,16 @@
             index=0
             testing=0
         } else {
-            //todo remove this lines
-            localStorage.setItem("i", 0)
-            localStorage.setItem("started", 0)
-
-            fetch('/data', {method:"PATCH", body:localStorage.getItem("final")})
+            //todo remove these lines
+            if (params.get('dev')) {
+                localStorage.setItem("i", 0)
+                localStorage.setItem("started", 0)
+            } else {
+                localStorage.setItem("finished", 1)
+            }
+            fetch('/data', {method:"PATCH", body:JSON.stringify({is:indexSet, cs:caseSet, data:localStorage.getItem("final")})})
             localStorage.removeItem("final")
-            window.location.href = "/"
+            window.location.href = "/done"
         }
     }
     async function fetchWordSet() {
@@ -145,7 +151,8 @@
                     "correct": i == correctIndex, 
                     "time": window.performance.now() - startTime, 
                     "style": style.name, 
-                    "correctI": correctIndex
+                    "correctI": correctIndex,
+                    "correctS": wordArray[0]
                 })
             localStorage.setItem("final", JSON.stringify(final))
         }
@@ -164,7 +171,6 @@
         showCorrect()
     }
     function start() {
-        index=0
         localStorage.setItem("started", 1)
         divExp.style.display = "flex"
         divDesc.style.display = "none"
@@ -178,6 +184,10 @@
         run()
     }
     window.onload = async () => {
+        if (localStorage.getItem("finished")) {
+            window.location.href = '/done'
+            return
+        }
         uid = parseInt(localStorage.getItem("uid"))
         if (!uid) {
             res = await fetch('/uid')
@@ -185,13 +195,16 @@
         }
         localStorage.setItem("uid", uid)
 
+        index = localStorage.getItem("i") || 0
+        params = new URLSearchParams(window.location.search)
+        indexSet = localStorage.getItem("is") || '<%= is %>'
+        caseSet = localStorage.getItem("cs") || '<%= cs %>'
+        localStorage.setItem("is", indexSet)
+        localStorage.setItem("cs", caseSet)
+        console.log(caseSet)
         if (parseInt(localStorage.getItem("started"))) {
             start()
         }
-        let params = new URLSearchParams(window.location.search)
-        index = localStorage.getItem("i") || 0
-        indexSet = params.get('is') || 'is1'
-        caseSet = params.get('cs') || 'cs1'
     }
 
 </script>
