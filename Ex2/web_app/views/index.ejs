@@ -4,109 +4,164 @@
 <link href="stylesheets/style.css" rel="stylesheet" />
 
 <head>
-    <title>Human Experiment</title>
+  <title>Human Experiment</title>
 </head>
 
 <body>
-    <h1>camelCase or kebab-case</h1>
-    <h2>which is better ?</h2>
+  <h1>camelCase or kebab-case</h1>
+  <h2>which is better ?</h2>
 
-    <div class="description">
-        <p>.........................</p>
-    </div>
+  <div class="description">
+    <p>.........................</p>
+  </div>
 
-    <div class="grid">
+  <div class="grid">
 
-       <div class="container">
-	
-        <h3>Choose your age group:</h3>
-        
+    <div class="container">
+
+      <h3>Choose your age group:</h3>
+
       <ul>
-      <li>
-        <input type="radio" id="f-option" name="selector">
-        <label for="f-option">16-20</label>
-        
-        <div class="check"></div>
-      </li>
-      
-      <li>
-        <input type="radio" id="s-option" name="selector">
-        <label for="s-option">21-24</label>
-        
-        <div class="check"><div class="inside"></div></div>
-      </li>
-      
-      <li>
-        <input type="radio" id="t-option" name="selector">
-        <label for="t-option">25-...</label>
-        
-        <div class="check"><div class="inside"></div></div>
-      </li>
-    </ul>
+        <li>
+          <input type="radio" id="f-option" name="age" value="16">
+          <label for="f-option">16-20</label>
+
+          <div class="check"></div>
+        </li>
+
+        <li>
+          <input type="radio" id="s-option" name="age" value="21">
+          <label for="s-option">21-24</label>
+
+          <div class="check">
+            <div class="inside"></div>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="t-option" name="age" value="25">
+          <label for="t-option">25-...</label>
+
+          <div class="check">
+            <div class="inside"></div>
+          </div>
+        </li>
+      </ul>
     </div>
 
 
     <div class="container">
-	
-        <h3>Have you ever programmed?</h3>
-        
+
+      <h3>Do you study computer science?</h3>
+
       <ul>
-      <li>
-        <input type="radio" id="yes" name="hp">
-        <label for="yes">Yes</label>
-        
-        <div class="check"></div>
-      </li>
-      
-      <li>
-        <input type="radio" id="no" name="hp">
-        <label for="no">No</label>
-        
-        <div class="check"><div class="inside"></div></div>
-      </li>
-      
-    </ul>
+        <li>
+          <input type="radio" id="yes" name="hp" value="yes">
+          <label for="yes">Yes</label>
+
+          <div class="check"></div>
+        </li>
+
+        <li>
+          <input type="radio" id="no" name="hp" value="no">
+          <label for="no">No</label>
+
+          <div class="check">
+            <div class="inside"></div>
+          </div>
+        </li>
+
+      </ul>
     </div>
 
-    <div class="container">
-	
-        <h3>If yes, how much ?</h3>
-        
-      <ul>
-      <li>
-        <input type="radio" id="once" name="hm">
-        <label for="once">Once</label>
-        
-        <div class="check"></div>
-      </li>
-      
-      <li>
-        <input type="radio" id="lt5" name="hm">
-        <label for="lt5">Less than 5 times</label>
-        
-        <div class="check"><div class="inside"></div></div>
-      </li>
-      
-      <li>
-        <input type="radio" id="mt5" name="hm">
-        <label for="mt5">More than 5 times</label>
-        
-        <div class="check"><div class="inside"></div></div>
-      </li>
-    </ul>
-    </div>
-   
-    </div>
+   <!--  <div class="container">
 
-      <br><br><br><br>
-    <div class="contain">
-        <form method="" action="/run">
-        <button id="btnStart" type="submit">Start TEST</button>
+      <h3>If yes, how much ?</h3>
+
+      <ul>
+        <li>
+          <input type="radio" id="once" name="hm" value="once">
+          <label for="once">Once</label>
+
+          <div class="check"></div>
+        </li>
+
+        <li>
+          <input type="radio" id="lt5" name="hm" value="LT5">
+          <label for="lt5">Less than 5 times</label>
+
+          <div class="check">
+            <div class="inside"></div>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="mt5" name="hm" value="GT5">
+          <label for="mt5">More than 5 times</label>
+
+          <div class="check">
+            <div class="inside"></div>
+          </div>
+        </li>
+      </ul>
+    </div> -->
+
+  </div>
+
+  <br><br><br><br>
+  <div class="contain">
+    <form method="" action="/run">
+      <button id="btnStart" type="submit">Start TEST</button>
     </form>
-    </div>
+  </div>
 
 </body>
 
+<script>
+  /* 
+      var user
+  
+      var age = document.querySelectorAll("age")
+      var studyComputerScience = document.getElementById("cs") */
 
+
+  document.getElementById("btnStart").onclick = function (event) {
+
+    event.preventDefault();
+
+    var radiosAge = document.getElementsByName("age")
+    var radiosHp = document.getElementsByName("hp")
+    var radiosHm = document.getElementsByName("hm")
+
+    var selectedAge = Array.from(radiosAge).find(radiosAge => radiosAge.checked)
+    var selectedHp = Array.from(radiosHp).find(radiosHp => radiosHp.checked)
+    //var selectedHm = Array.from(radiosHm).find(radiosHm => radiosHm.checked)
+
+    function checkRadio() {
+      for (var i = 0; i < radiosAge.length; i++) {
+        if (radiosAge[i].checked) {
+          for (var i = 0; i < radiosHp.length; i++) {
+            if (radiosHp[i].checked) {
+              /* for (var i = 0; i < radiosHm.length; i++) {
+                if (radiosHm[i].checked) { */
+                  var obj = {'age': selectedAge.value, 'HP': selectedHp.value, /*'HM': selectedHm.value*/}
+                  localStorage.setItem("dataRB", JSON.stringify(obj))
+                  location.href = "/run"
+                  return
+                /* }
+
+              } */
+            }
+          }
+        }
+      } alert('Please select')
+    }
+
+    checkRadio();
+    
+  }
+
+
+</script>
 
 </html>
