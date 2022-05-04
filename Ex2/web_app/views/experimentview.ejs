@@ -1,17 +1,43 @@
 <body>
-    <h1 id="wordsTitle"></h1>
-    <div id="buttonBox" style="display:none;">
-        <button class="option" id="option1" onclick="clickOption(0)"></button>
-        <button class="option" id="option2" onclick="clickOption(1)"></button>
-        <button class="option" id="option3" onclick="clickOption(2)"></button>
-        <button class="option" id="option4" onclick="clickOption(3)"></button>
+    
+    <div id="desc">
+        <p>
+            In this experiment you will see a sequence of words on the screen. 
+            Then, when you click Start, 4 different spellings of that sequence will appear in either camel case or kebab case.
+            Your goal is to click on the correct spelling as quickly as possible.
+        </p>
+        <p>
+            If you want to stop the experiment, you can close the web page at any time. No data about you will be saved if you don't finish the experiment.
+        </p>
+        <p>
+            Before you begin the experiment, you can see how it works by trying it in a test environment.
+        </p>
+        <button id="startExperimentButton" onclick="start()">
+            Start Experiment
+        </button>
+        <button id="testExperimentButton" onclick="test()">
+            Test Experiment
+        </button>
     </div>
-    <button id="startButton" onclick="show()">
-    Start
-    </button>
+    <div id="experiment" style="display:none;">
+       
+        <h1 id="wordsTitle"></h1>
+        <div id="buttonBox" style="display:none;">
+            <button class="option" id="option1" onclick="clickOption(0)"></button>
+            <button class="option" id="option2" onclick="clickOption(1)"></button>
+            <button class="option" id="option3" onclick="clickOption(2)"></button>
+            <button class="option" id="option4" onclick="clickOption(3)"></button>
+        </div>
+        <button id="startButton" onclick="show()">
+        Start
+        </button>
+     
+    </div>
 </body>
 
 <script>
+    var testing = 0
+    var uid
     var index = 0;
     var wordArray;
     var startTime;
@@ -21,6 +47,11 @@
     var startButton = document.getElementById("startButton")
     var wordsTitle = document.getElementById("wordsTitle")
     var buttonBox = document.getElementById("buttonBox")
+    var divDesc = document.getElementById("desc")
+    var divExp = document.getElementById("experiment")
+    var testCases = [
+        {0:"1", 1:"2", 2:"camelcase,kebabcase", words:["hello world","helli world","hello woord","hello words"]}
+    ]
     var options = [
         document.getElementById("option1"),
         document.getElementById("option2"),
@@ -46,22 +77,46 @@
         return words.map(a => a[0].toUpperCase() + a.substring(1)).join(" ")
     }
     var style = camelcase
-    async function fetchWordSet() {
-        res = await fetch(`/words?i=${index}`)
-        console.log(res)
-        if (res.ok) {
-            let json = await res.json()
-            wordArray = json["words"]
-            correctIndex = parseInt(json[indexSet])
-            style = Math.random() - 0.5 > 0 ? camelcase : kebabcase
-            index++;
+    function end() {
+        if (testing) {
+            divExp.style.display = "none"
+            divDesc.style.display = "flex"
+            localStorage.setItem("started", 0)
+            index=0
+            testing=0
         } else {
-            //todo remove this line
+            //todo remove this lines
             localStorage.setItem("i", 0)
+            localStorage.setItem("started", 0)
+
             fetch('/data', {method:"PATCH", body:localStorage.getItem("final")})
             localStorage.removeItem("final")
             window.location.href = "/"
         }
+    }
+    async function fetchWordSet() {
+        let json
+        if (testing) {
+            json = testCases[index]
+            console.log(json)
+            if (json == undefined) {
+                end()
+                return
+            }
+        } else {
+            let res = await fetch(`/words?i=${index}`)
+            if (res.ok) {
+                json = await res.json()
+            } else {
+                end()
+                return
+            }
+        }
+        wordArray = json["words"]
+        correctIndex = parseInt(json[indexSet])
+        //todo change this
+        style = Math.random() - 0.5 > 0 ? camelcase : kebabcase
+        index++;
     }
     function showCorrect() {
         buttonBox.style.display = "none"
@@ -78,10 +133,18 @@
     }
     function clickOption(i) {
         let final = localStorage.getItem("final")
-        final = JSON.parse(final) || []
-        final.push({"correct": i == correctIndex, "time": window.performance.now() - startTime, "style": style.name, "correctI": correctIndex})
-        console.log(final)
-        localStorage.setItem("final", JSON.stringify(final))
+        if (!testing) {
+            final = JSON.parse(final) || []
+            final.push(
+                {
+                    "uid": uid,
+                    "correct": i == correctIndex, 
+                    "time": window.performance.now() - startTime, 
+                    "style": style.name, 
+                    "correctI": correctIndex
+                })
+            localStorage.setItem("final", JSON.stringify(final))
+        }
         localStorage.setItem("i", index)
         run()
     }
@@ -96,11 +159,35 @@
         await fetchWordSet()
         showCorrect()
     }
-    window.onload = () => {
+    function start() {
+        index=0
+        localStorage.setItem("started", 1)
+        divExp.style.display = "flex"
+        divDesc.style.display = "none"
+        run()
+    }
+    function test() {
+        index=0
+        divExp.style.display = "flex"
+        divDesc.style.display = "none"
+        testing=1
+        run()
+    }
+    window.onload = async () => {
+        uid = parseInt(localStorage.getItem("uid"))
+        if (!uid) {
+            res = await fetch('/uid')
+            uid = await res.json()
+        }
+        localStorage.setItem("uid", uid)
+
+        if (parseInt(localStorage.getItem("started"))) {
+            start()
+        }
         let params = new URLSearchParams(window.location.search)
         index = localStorage.getItem("i") || 0
         indexSet = parseInt(params.get('is')) || Math.floor(Math.random() * 2) + 1;
         indexSet = "is" + indexSet--
-        run()
     }
+
 </script>

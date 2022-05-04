@@ -1,5 +1,4 @@
 var fs = require('fs')
-// var fetch = require('node-fetch')
 var express = require('express');
 const { assert } = require('console');
 var router = express.Router();
@@ -15,7 +14,7 @@ router.get('/run',async function(req, res, next) {
   res.render('experimentview.ejs');
 });
 
-const data_keys = ["correct","time","style","correctI"]
+const data_keys = ["uid","correct","time","style","correctI"]
 const data_path = __dirname + "/../public/data.csv"
 router.patch('/data',function(req, res, next) {
   req.on('data', (d) => {
@@ -31,6 +30,17 @@ router.patch('/data',function(req, res, next) {
       res.status(200).end()
     })
   })
+})
+
+router.delete('/data',function(req, res, next) {
+  fs.writeFile(data_path, data_keys.join(",")+"\n", () => {
+    res.status(200).end()
+  })
+})
+
+var uid = 0
+router.get('/uid', function(req, res, next) {
+  res.send(uid++ + "")
 })
 
 module.exports = router;
