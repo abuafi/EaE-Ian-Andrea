@@ -38,9 +38,14 @@ fs.createReadStream("./public/words.csv")
 
 app.get(`/words`, async function(req, res) {
   i = parseInt(req.query.i) || 0
+  is = req.query.is || "is1"
+  cs = req.query.cs || "cs1"
   if (i >= words.length || i < 0) res.status(400).end()
   else {
-    res.json(words[i])
+    data = words[i]
+    data["index"] = data[is]
+    data["case"] = (data["defcase"] == "camelcase") ^ (cs == "cs1") ? "camelcase" : "kebabcase"
+    res.json(data)
   }
 })
 

@@ -1,6 +1,8 @@
+<link href="stylesheets/style.css" rel="stylesheet" />
+<link href="stylesheets/exp_style.css" rel="stylesheet" />
 <body>
     
-    <div id="desc">
+    <div id="desc" class="description">
         <p>
             In this experiment you will see a sequence of words on the screen. 
             Then, when you click Start, 4 different spellings of that sequence will appear in either camel case or kebab case.
@@ -12,26 +14,30 @@
         <p>
             Before you begin the experiment, you can see how it works by trying it in a test environment.
         </p>
-        <button id="startExperimentButton" onclick="start()">
-            Start Experiment
-        </button>
-        <button id="testExperimentButton" onclick="test()">
-            Test Experiment
-        </button>
+        <div class="buttonRow">
+            <button id="startExperimentButton" onclick="start()">
+                Start Experiment
+            </button>
+            <button id="testExperimentButton" onclick="test()">
+                Test Experiment
+            </button>
+        </div>
     </div>
     <div id="experiment" style="display:none;">
        
-        <h1 id="wordsTitle"></h1>
-        <div id="buttonBox" style="display:none;">
+        <h1 id="wordsTitle" class="mono"></h1>
+        <div id="buttonBox" style="display:none;" class="buttonRow mono">
             <button class="option" id="option1" onclick="clickOption(0)"></button>
             <button class="option" id="option2" onclick="clickOption(1)"></button>
             <button class="option" id="option3" onclick="clickOption(2)"></button>
             <button class="option" id="option4" onclick="clickOption(3)"></button>
         </div>
-        <button id="startButton" onclick="show()">
-        Start
-        </button>
-     
+        <div class="buttonRow">
+            <button id="startButton" onclick="show()">
+                Start
+            </button>
+        </div>
+        
     </div>
 </body>
 
@@ -50,7 +56,7 @@
     var divDesc = document.getElementById("desc")
     var divExp = document.getElementById("experiment")
     var testCases = [
-        {0:"1", 1:"2", 2:"camelcase,kebabcase", words:["hello world","helli world","hello woord","hello words"]}
+        {0:"1", 1:"2", case:"camelcase", words:["hello world","helli world","hello woord","hello words"]}
     ]
     var options = [
         document.getElementById("option1"),
@@ -98,13 +104,12 @@
         let json
         if (testing) {
             json = testCases[index]
-            console.log(json)
             if (json == undefined) {
                 end()
                 return
             }
         } else {
-            let res = await fetch(`/words?i=${index}`)
+            let res = await fetch(`/words?i=${index}&is=${indexSet}&cs=${caseSet}`)
             if (res.ok) {
                 json = await res.json()
             } else {
@@ -113,9 +118,8 @@
             }
         }
         wordArray = json["words"]
-        correctIndex = parseInt(json[indexSet])
-        //todo change this
-        style = Math.random() - 0.5 > 0 ? camelcase : kebabcase
+        correctIndex = parseInt(json["index"])
+        style = window[json["case"]]
         index++;
     }
     function showCorrect() {
@@ -186,8 +190,8 @@
         }
         let params = new URLSearchParams(window.location.search)
         index = localStorage.getItem("i") || 0
-        indexSet = parseInt(params.get('is')) || Math.floor(Math.random() * 2) + 1;
-        indexSet = "is" + indexSet--
+        indexSet = params.get('is') || 'is1'
+        caseSet = params.get('cs') || 'cs1'
     }
 
 </script>

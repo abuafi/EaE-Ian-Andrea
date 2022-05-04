@@ -1,4 +1,4 @@
-is1,is2,cs1,cs2
-4  ,2  ,kebabcase,camelcase,event bus,evenf bus,event pus,event bar
-3  ,1  ,camelcase,kebabcase,add event listener,ads event listener,add event litsener,add ewent listener
-1  ,3  ,camelcase,kebabcase,get by class,git by class,get py class,get by closs
+is1,is2,defcase
+4,2,camelcase,event bus,evenf bus,event pus,event bar
+3,1,kebabcase,add event listener,ads event listener,add event litsener,add ewent listener
+1,3,kebabcase,get by class,git by class,get py class,get by closs

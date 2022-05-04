@@ -1,0 +1,13 @@
+#desc, #experiment {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mono *, .mono {
+  font-family:monospace
+}
