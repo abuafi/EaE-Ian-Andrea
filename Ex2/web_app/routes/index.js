@@ -30,7 +30,7 @@ router.get('/done',async function(req, res, next) {
   res.render('doneview.ejs');
 });
 
-const data_keys = ["uid","correct","time","style","correctI","correctS"]
+const data_keys = ["uid","correct","time","style","correctI","correctS","device","csexp"]
 const data_path = __dirname + "/../public/data.csv"
 router.patch('/data',function(req, res, next) {
   req.on('data', (d) => {
