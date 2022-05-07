@@ -1,4 +1,4 @@
-body{
+body {
   background-color: #20063B;
 }
 
@@ -11,7 +11,7 @@ body{
   color: #C2F9BB;
 }
 
-h3{
+h3 {
   font-family: Arial;
 }
 
@@ -19,28 +19,31 @@ h1 {
   color: #CC3363;
   font-family: Arial;
   text-align: center;
-  font-size:65px;
+  font-size: 65px;
 }
+
 h2 {
   font-family: Arial;
   color: #9AD1D4;
   text-align: center;
-  font-size:30px;
+  font-size: 30px;
 }
 
 .description {
   text-align: center;
-  color: #C2F9BB;
+  color: #9AD1D4;
+  /*color: #C2F9BB; */
+  font-weight: 200;
 }
 
-.forms{
+.forms {
   padding-left: 45%;
 }
 
-label:hover{
+label:hover {
   border: 1px solid var(--other);
   border-radius: 100%;
-  color:red;
+  color: red;
 }
 
 
@@ -48,7 +51,8 @@ label:hover{
   text-align: center;
 }
 
-#btnStart, #btnStart::after {
+#btnStart,
+#btnStart::after {
   width: 280px;
   height: 66px;
   font-size: 36px;
@@ -69,7 +73,7 @@ label:hover{
   --slice-3: inset(10% -6px 85% 0);
   --slice-4: inset(40% -6px 43% 0);
   --slice-5: inset(80% -6px 5% 0);
-  
+
   content: 'START TEST';
   display: block;
   position: absolute;
@@ -82,7 +86,7 @@ label:hover{
   clip-path: var(--slice-0);
 }
 
-#btnStart:hover{
+#btnStart:hover {
   width: 288px;
   height: 74px;
   transition-duration: 0.6s;
@@ -93,7 +97,7 @@ label:hover{
   animation-timing-function: steps(2, end);
   width: 295px;
   height: 80px;
-  
+
 }
 
 @keyframes glitch {
@@ -101,42 +105,52 @@ label:hover{
     clip-path: var(--slice-1);
     transform: translate(-20px, -10px);
   }
+
   10% {
     clip-path: var(--slice-3);
     transform: translate(10px, 10px);
   }
+
   20% {
     clip-path: var(--slice-1);
     transform: translate(-10px, 10px);
   }
+
   30% {
     clip-path: var(--slice-3);
     transform: translate(0px, 5px);
   }
+
   40% {
     clip-path: var(--slice-2);
     transform: translate(-5px, 0px);
   }
+
   50% {
     clip-path: var(--slice-3);
     transform: translate(5px, 0px);
   }
+
   60% {
     clip-path: var(--slice-4);
     transform: translate(5px, 10px);
   }
+
   70% {
     clip-path: var(--slice-2);
     transform: translate(-10px, 10px);
   }
+
   80% {
     clip-path: var(--slice-5);
     transform: translate(20px, -10px);
   }
+
   90% {
     clip-path: var(--slice-1);
     transform: translate(-10px, 0px);
   }
+
   100% {
     clip-path: var(--slice-1);
     transform: translate(0);
@@ -144,16 +158,14 @@ label:hover{
 }
 
 
-
-
-
-.container{
+.container {
   display: block;
   position: relative;
   margin: 20px auto;
   height: auto;
   width: 350px;
   padding: 20px;
+  transition-duration: 0.85s;
 }
 
 .container:hover {
@@ -161,33 +173,40 @@ label:hover{
   background-color: #2a0b4be0;
   height: auto;
   width: 450px;
-  transition-duration: 1s;
+
 }
 
+/* .container:hover {
+  background-color: #2a0b4be0;
+  height: auto;
+  width: 450px;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+} */
 
-.container ul{
+.container ul {
   list-style: none;
   margin: 0;
   padding: 0;
-	/* overflow: auto; */
+  /* overflow: auto; */
 }
 
-ul li{
+ul li {
   color: #AAAAAA;
   display: block;
   position: relative;
   float: left;
   width: 80%;
   height: 60px;
-	border-bottom: 1px solid #333;
+  border-bottom: 1px solid #333;
 }
 
-ul li input[type=radio]{
+ul li input[type=radio] {
   position: absolute;
   visibility: hidden;
 }
 
-ul li label{
+ul li label {
   font-family: Arial;
   display: block;
   position: relative;
@@ -199,13 +218,14 @@ ul li label{
   z-index: 9;
   cursor: pointer;
   -webkit-transition: all 0.25s linear;
+  transition: all 0.25s linear;
 }
 
-ul li:hover label{
-	color: #FFFFFF;
+ul li:hover label {
+  color: #FFFFFF;
 }
 
-ul li .check{
+ul li .check {
   display: block;
   position: absolute;
   border: 5px solid #AAAAAA;
@@ -214,9 +234,9 @@ ul li .check{
   width: 15px;
   top: 30px;
   left: 20px;
-	z-index: 5;
-	transition: border .25s linear;
-	-webkit-transition: border .25s linear;
+  z-index: 5;
+  transition: border .25s linear;
+  -webkit-transition: border .25s linear;
 }
 
 ul li:hover .check {
@@ -226,28 +246,50 @@ ul li:hover .check {
 ul li .check::before {
   display: block;
   position: absolute;
-	content: '';
+  content: '';
   border-radius: 100%;
   height: 10px;
   width: 10px;
   top: 2.5px;
-	left: 2.5px;
+  left: 2.5px;
   margin: auto;
-	transition: background 0.25s linear;
-	-webkit-transition: background 0.25s linear;
+  transition: background 0.25s linear;
+  -webkit-transition: background 0.25s linear;
 }
 
-input[type=radio]:checked ~ .check {
+input[type=radio]:checked~.check {
   border: 5px solid #CC3363;
 }
 
-input[type=radio]:checked ~ .check::before{
+input[type=radio]:checked~.check::before {
   background: #CC3363;
 }
 
-input[type=radio]:checked ~ label{
+input[type=radio]:checked~label {
   color: #cc3363;
 }
 
+@media screen and (max-device-width: 650px) {
+  .grid {
+    flex-direction: column;
+    margin-left: 8%;
+  }
+ 
+.container {
+  display: block;
+  position: relative;
+  margin: 20px auto;
+  height: auto;
+  width: 320px;
+  padding: 20px;
+  transition-duration: 0.75s;
+} 
 
+.container:hover {
 
+  background-color: #2a0b4be0;
+  height: auto;
+  width: 400px;
+
+}
+}

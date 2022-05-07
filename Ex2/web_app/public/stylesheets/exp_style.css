@@ -22,8 +22,6 @@ button {
   height: 70px;
   position: relative;
   background: #3a096e;
-  /* background: #280a49; */
-  /* background: #340f5c; */
   margin-bottom: 25px;
   border-radius: 20px;
   border: none;
@@ -31,15 +29,11 @@ button {
   font-size: 24px;
   color: #fff;
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
-
-  /*   box-shadow: -4px -4px 6px rgba(255, 255, 255, 0.8),
-          4px 4px 6px rgba(0, 0, 0, 0.2); */
+  box-shadow: -1px -1px 8px 0px #c2f9bb4f, 4px 4px 6px rgb(0 0 0 / 20%);
 }
 
 button:hover {
 
-  box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.5),
-    inset 6px 6px 12px rgba(0, 0, 0, 0.1);
-
+  box-shadow: inset -3px -3px 6px #c2f9bb4f,
+              inset 6px 6px 12px rgba(0, 0, 0, 0.1);
 }
