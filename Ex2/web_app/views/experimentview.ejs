@@ -3,6 +3,7 @@
 <body>
     
     <div id="desc" class="description">
+        <h3>Instructions</h3>
         <p>
             In this experiment you will see a sequence of words on the screen. 
             Then, when you click Start, 4 different spellings of that sequence will appear in either camel case or kebab case.
@@ -11,21 +12,16 @@
             Your goal is to click on the correct spelling as quickly as possible.
         </p>
         <p>
-            If you want to stop the experiment, you can close the web page at any time. No data about you will be saved if you don't finish the experiment.
+            Before you begin the experiment, you can see how it works by trying it in a test environment by clicking on "Test Experiment".
+            When you're ready, click on "Start Experiment" to begin.
         </p>
-        <p>
-            Before you begin the experiment, you can see how it works by trying it in a test environment.
-        </p>
-
-        <br><br><br>
-
         <div class="buttonRow">
-            <button id="startExperimentButton" onclick="start()">
+            <div class="buttonRowW"><button id="startExperimentButton" class="fancybtn" onclick="start()">
                 Start Experiment
-            </button>
-            <button id="testExperimentButton" onclick="test()">
+            </button></div>
+            <div class="buttonRowW"><button id="testExperimentButton" class="fancybtn" onclick="test()">
                 Test Experiment
-            </button>
+            </button></div>
         </div>
     </div>
 
@@ -35,15 +31,14 @@
     <div id="experiment" style="display:none;">
        
         <h1 id="wordsTitle" class="mono"></h1>
-        <br><br><br>
-        <div id="buttonBox" style="display:none;" class="buttonRow mono">
+        <div id="buttonBox" style="display:none;" class="buttonRow mono mup">
             <button class="option" id="option1" onclick="clickOption(0)"></button>
             <button class="option" id="option2" onclick="clickOption(1)"></button>
             <button class="option" id="option3" onclick="clickOption(2)"></button>
             <button class="option" id="option4" onclick="clickOption(3)"></button>
         </div>
-        <div class="buttonRow">
-            <button id="startButton" onclick="show()">
+        <div class="buttonRow mup">
+            <button id="startButton" class="option" onclick="show()">
                 Start
             </button>
         </div>
@@ -160,7 +155,9 @@
                     "time": window.performance.now() - startTime, 
                     "style": style.name, 
                     "correctI": correctIndex,
-                    "correctS": wordArray[0]
+                    "correctS": wordArray[0],
+                    "device": localStorage.getItem("device"),
+                    "csexp": localStorage.getItem("csexp")
                 })
             localStorage.setItem("final", JSON.stringify(final))
         }

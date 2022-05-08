@@ -8,52 +8,48 @@
 </head>
 
 <body>
-  <h1>camelCase or kebab-case</h1>
-  <h2>which is better ?</h2>
-
-  <div class="description">
-    <p>.........................</p>
+  <h1>Capitalization Convention Experiment</h1>
+  <h2>By Ian Abuaf Pelo and Gualandris Andrea</h2>
+  <div class="description infcon">
+    <h3>Informed consent:</h3>
+    <p>For the purposes of the experiment we will record your anonimyzed answers to the following form. Furthermore, your reaction time and correctness during the experiment will also be recorded.</p>
+    <p>If you want to stop the experiment, you may close the web page at any time. No data about you will be saved if you don't finish the experiment.</p>
+    <p>By completing the experiment you grant us permission to use your anonimyzed data for educational or research purposes.</p>
   </div>
-
   <div class="grid">
-
     <div class="container">
-
-      <h3>Choose your age group:</h3>
-
+      <h3>What input device are you using?</h3>
       <ul>
         <li>
-          <input type="radio" id="f-option" name="age" value="16">
-          <label for="f-option">16-20</label>
-
+          <input type="radio" id="f-option" name="device" value="mouse">
+          <label for="f-option">Mouse</label>
           <div class="check"></div>
         </li>
-
         <li>
-          <input type="radio" id="s-option" name="age" value="21">
-          <label for="s-option">21-24</label>
-
+          <input type="radio" id="s-option" name="device" value="trackpad">
+          <label for="s-option">Trackpad</label>
           <div class="check">
             <div class="inside"></div>
           </div>
         </li>
-
         <li>
-          <input type="radio" id="t-option" name="age" value="25">
-          <label for="t-option">25-...</label>
-
+          <input type="radio" id="t-option" name="device" value="touch">
+          <label for="t-option">Touchscreen</label>
+          <div class="check">
+            <div class="inside"></div>
+          </div>
+        </li>
+        <li>
+          <input type="radio" id="o-option" name="device" value="other">
+          <label for="o-option">Other</label>
           <div class="check">
             <div class="inside"></div>
           </div>
         </li>
       </ul>
     </div>
-
-
     <div class="container">
-
-      <h3>Do you study computer science?</h3>
-
+      <h3>Do you study or work in the field of computer science?</h3>
       <ul>
         <li>
           <input type="radio" id="yes" name="hp" value="yes">
@@ -61,16 +57,13 @@
 
           <div class="check"></div>
         </li>
-
         <li>
           <input type="radio" id="no" name="hp" value="no">
           <label for="no">No</label>
-
           <div class="check">
             <div class="inside"></div>
           </div>
         </li>
-
       </ul>
     </div>
 
@@ -107,11 +100,10 @@
     </div> -->
 
   </div>
-
-  <br><br><br><br>
+  <p class="description">By clicking "Proceed" you agree to the informed consent terms defined above.</p>
   <div class="contain">
     <form method="" action="/run">
-      <button id="btnStart" type="submit">Start TEST</button>
+      <button id="btnStart" class="fancybtn" type="submit">Proceed</button>
     </form>
   </div>
 
@@ -129,38 +121,21 @@
 
     event.preventDefault();
 
-    var radiosAge = document.getElementsByName("age")
+    var radiosDevice = document.getElementsByName("device")
     var radiosHp = document.getElementsByName("hp")
-    var radiosHm = document.getElementsByName("hm")
+    // var radiosHm = document.getElementsByName("hm")
 
-    var selectedAge = Array.from(radiosAge).find(radiosAge => radiosAge.checked)
+    var selectedDevice = Array.from(radiosDevice).find(radiosDevice => radiosDevice.checked)
     var selectedHp = Array.from(radiosHp).find(radiosHp => radiosHp.checked)
-    //var selectedHm = Array.from(radiosHm).find(radiosHm => radiosHm.checked)
-
-    function checkRadio() {
-      for (var i = 0; i < radiosAge.length; i++) {
-        if (radiosAge[i].checked) {
-          for (var i = 0; i < radiosHp.length; i++) {
-            if (radiosHp[i].checked) {
-              /* for (var i = 0; i < radiosHm.length; i++) {
-                if (radiosHm[i].checked) { */
-                  var obj = {'age': selectedAge.value, 'HP': selectedHp.value, /*'HM': selectedHm.value*/}
-                  localStorage.setItem("dataRB", JSON.stringify(obj))
-                  location.href = "/run"
-                  return
-                /* }
-
-              } */
-            }
-          }
-        }
-      } alert('Please select')
+    if (selectedDevice == undefined || selectedHp == undefined) {
+        alert('Please complete the form to continue')
+        return
     }
-
-    checkRadio();
-    
+    console.log(selectedDevice.value)
+    localStorage.setItem("device", selectedDevice.value)
+    localStorage.setItem("csexp", selectedHp.value)
+    location.href = "/run"
   }
-
 
 </script>
 
