@@ -6,8 +6,9 @@
 }
 
 h1 {
-  font-size: 2.5em;
-  width: 350px;
+  font-size: 4em;
+  width: fit-content;
+  padding: 10px;
   height: 100px;
   background: rgba(0, 0, 0, 0.106);
   margin-bottom: 25px;
@@ -81,9 +82,9 @@ p {
   }
 
   h1 {
-    width: 400px;
+    width: fit-content;
     height: 120px;
-    font-size: 3em;
+    font-size: 4em;
   }
 
   .option {

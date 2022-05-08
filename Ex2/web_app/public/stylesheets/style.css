@@ -4,7 +4,9 @@
 
 body{
   background-color: #181818;
-  margin: 5vw;
+  /* margin: 5vw; */
+  margin-left: 5vw;
+  margin-right: 5vw;
   font-family: Arial;
 }
 
@@ -23,6 +25,7 @@ button {
 h1 {
   color: var(--primary-red);
   text-align: center;
+  font-size: 40px;                
 }
 
 h2 {
@@ -171,16 +174,16 @@ label:hover {
   position: relative;
   margin: 20px auto;
   height: auto;
-  width: 80vw;
+  width: 35vw;
   padding: 20px;
-  transition-duration: 0.85s;
+  transition-duration: 1s;
 }
 
 .container:hover {
 
   background-color: #00000010;
   height: auto;
-  width: 100vw;
+  width: 50vw;
   transition-duration: 1s;
 }
 
