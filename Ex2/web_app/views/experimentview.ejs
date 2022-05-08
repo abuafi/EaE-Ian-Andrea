@@ -5,11 +5,10 @@
     <div id="desc" class="description">
         <h3>Instructions</h3>
         <p>
-            In this experiment you will see a sequence of words on the screen. 
-            Then, when you click Start, 4 different spellings of that sequence will appear in either camel case or kebab case.
-        </p>
-        <p>
-            Your goal is to click on the correct spelling as quickly as possible.
+            In this experiment you will see a sequence of words on the screen.
+            Then, when you click "Start", 4 different spellings of the prompt will appear in either camel case or kebab case.
+            Your goal is to click on the correct spelling as quickly as possible. 
+            Time doesn't start until you click on "Start" so you can read the prompt for as long as you want.
         </p>
         <p>
             Before you begin the experiment, you can see how it works by trying it in a test environment by clicking on "Test Experiment".
@@ -62,7 +61,9 @@
     var divDesc = document.getElementById("desc")
     var divExp = document.getElementById("experiment")
     var testCases = [
-        {0:"1", 1:"2", case:"camelcase", words:["hello world","helli world","hello woord","hello words"]}
+        {0:"1", 1:"2", case:"camelcase", words:["hello world","helli world","hello woord","hello words"]},
+        {0:"4", 1:"1", case:"kebabcase", words:["correct index","correct jndex","cprrect index","correct indez"]},
+        {0:"2", 1:"3", case:"camelcase", words:["start time","srart time","start tyme","stars time"]}
     ]
     var options = [
         document.getElementById("option1"),
@@ -176,6 +177,11 @@
         showCorrect()
     }
     function start() {
+        index=0
+        localStorage.setItem("i", 0)
+        resume()
+    }
+    function resume() {
         localStorage.setItem("started", 1)
         divExp.style.display = "flex"
         divDesc.style.display = "none"
@@ -183,6 +189,7 @@
     }
     function test() {
         index=0
+        localStorage.setItem("i", 0)
         divExp.style.display = "flex"
         divDesc.style.display = "none"
         testing=1
@@ -208,7 +215,7 @@
         localStorage.setItem("cs", caseSet)
         console.log(caseSet)
         if (parseInt(localStorage.getItem("started"))) {
-            start()
+            resume()
         }
     }
 
