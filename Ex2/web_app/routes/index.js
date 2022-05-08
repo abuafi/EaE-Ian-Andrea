@@ -34,11 +34,8 @@ const data_keys = ["uid","correct","time","style","correctI","correctS","device"
 const data_path = __dirname + "/../public/data.csv"
 router.patch('/data',function(req, res, next) {
   req.on('data', (d) => {
-    let data = JSON.parse(d)
-    let groups = {is:data['is'], cs:data['cs']}
-    counts[JSON.stringify(groups)]++
     let f = ''
-    for (let line of JSON.parse(data['data'])) {
+    for (let line of JSON.parse(d)) {
       for (let key of data_keys) {
         f += line[key] + ","
       }
@@ -47,6 +44,15 @@ router.patch('/data',function(req, res, next) {
     fs.appendFile(data_path, f, () => {
       res.status(200).end()
     })
+  })
+})
+
+router.post('/finish',function(req, res, next) {
+  req.on('data', (d) => {
+    let data = JSON.parse(d)
+    let groups = {is:data['is'], cs:data['cs']}
+    counts[JSON.stringify(groups)]++
+    res.status(200).end()
   })
 })
 
