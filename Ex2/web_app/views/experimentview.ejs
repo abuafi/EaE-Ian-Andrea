@@ -43,6 +43,10 @@
         </div>
         
     </div>
+
+    <div id="wait" class="description" style="display: none;">
+        <p>Please wait... Server is not responding :/</p>
+    </div>
 </body>
 
 <script>
@@ -60,6 +64,7 @@
     var buttonBox = document.getElementById("buttonBox")
     var divDesc = document.getElementById("desc")
     var divExp = document.getElementById("experiment")
+    var wait = document.getElementById("wait")
     var testCases = [
         {"index":"2", case:"camelcase", words:["hello world","helli world","hello woord","hello words"]},
         {"index":"1", case:"kebabcase", words:["correct index","correct jndex","cprrect index","correct indez"]},
@@ -90,6 +95,25 @@
         return words.map(a => a[0].toUpperCase() + a.substring(1)).join(" ")
     }
     var style = camelcase
+    async function fetchdata(tries, arg1, arg2) {
+                return fetch(arg1, arg2)
+                .catch(async (res) => {
+                    if (tries > 0) {
+                        wait.style.display = "flex"
+                        await new Promise(async (r) => {await setTimeout(r, 2000)})
+                        return fetchdata(tries-1, arg1, arg2)
+                    }
+                }).then(async (res) => {
+                    console.log(res)
+                    if (tries > 0 && (!res || res.status == 502)) {
+                        wait.style.display = "flex"
+                        await new Promise(async (r) => {await setTimeout(r, 2000)})
+                        return fetchdata(tries-1, arg1, arg2)
+                    }
+                    wait.style.display = "none"
+                    return res
+                })
+            }
     async function end() {
         if (testing) {
             divExp.style.display = "none"
@@ -105,11 +129,13 @@
             } else {
                 localStorage.setItem("finished", 1)
             }
-            await fetch('/finish', {method:"POST", body:JSON.stringify({is:indexSet, cs:caseSet})})
+            await fetchdata(10, '/finish', {method:"POST", body:JSON.stringify({is:indexSet, cs:caseSet})})
             data = JSON.parse(localStorage.getItem("final"))
-            while (data.length > 0)
-                await fetch('/data', {method:"PATCH", body:JSON.stringify(data.splice(0, 8))})
-            localStorage.removeItem("final")
+            while (data.length > 0) {
+                let d = data.splice(0, 8)
+                await fetchdata(10, '/data', {method:"PATCH", body:JSON.stringify(data)})
+            }
+            // localStorage.removeItem("final")
             window.location.href = "/done"
         }
     }
@@ -122,7 +148,7 @@
                 return
             }
         } else {
-            let res = await fetch(`/words?i=${index}&is=${indexSet}&cs=${caseSet}`)
+            let res = await fetchdata(10, `/words?i=${index}&is=${indexSet}&cs=${caseSet}`, {})
             if (res.ok) {
                 json = await res.json()
             } else {
@@ -205,7 +231,7 @@
         }
         uid = parseInt(localStorage.getItem("uid"))
         if (!uid) {
-            res = await fetch('/uid')
+            res = await fetchdata(10, '/uid', {})
             uid = await res.json()
         }
         localStorage.setItem("uid", uid)

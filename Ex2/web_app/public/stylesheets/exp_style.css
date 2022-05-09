@@ -68,14 +68,16 @@ h1 {
 }
 
 p {
-  width: 80%;
+  width: fit-content;
+}
+
+#wait {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 @media screen and (max-width: 1000px) {
-
-  p {
-    width: 100%;
-  }
 
   .buttonRow {
     width: 90vw;
