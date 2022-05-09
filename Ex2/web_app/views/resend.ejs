@@ -1,0 +1,34 @@
+<body>
+    <h1 id="done" style="display: none">Done :)</h1>
+</body>
+
+<script>
+    var done = document.getElementById("done")
+    async function fetchdata(tries, arg1, arg2) {
+                return fetch(arg1, arg2)
+                .catch(async (res) => {
+                    if (tries > 0) {
+                        // wait.style.display = "flex"
+                        await new Promise(async (r) => {await setTimeout(r, 2000)})
+                        return fetchdata(tries-1, arg1, arg2)
+                    }
+                }).then(async (res) => {
+                    console.log(res)
+                    if (tries > 0 && (!res || res.status == 502)) {
+                        // wait.style.display = "flex"
+                        await new Promise(async (r) => {await setTimeout(r, 2000)})
+                        return fetchdata(tries-1, arg1, arg2)
+                    }
+                    // wait.style.display = "none"
+                    return res
+                })
+            }
+    window.onload = async () => {
+        data = JSON.parse(localStorage.getItem("final"))
+            while (data.length > 0) {
+                let d = data.splice(0, 8)
+                await fetchdata(10, '/data', {method:"PATCH", body:JSON.stringify(d)})
+            }
+        done.style.display = "flex"
+    }
+</script>

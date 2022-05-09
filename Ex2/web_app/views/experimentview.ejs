@@ -133,7 +133,7 @@
             data = JSON.parse(localStorage.getItem("final"))
             while (data.length > 0) {
                 let d = data.splice(0, 8)
-                await fetchdata(10, '/data', {method:"PATCH", body:JSON.stringify(data)})
+                await fetchdata(10, '/data', {method:"PATCH", body:JSON.stringify(d)})
             }
             // localStorage.removeItem("final")
             window.location.href = "/done"

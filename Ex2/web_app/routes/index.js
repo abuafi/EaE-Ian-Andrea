@@ -18,11 +18,26 @@ for (j = 1; j <= caseSets; j++) {
   }
 }
 
+router.get('/counts',async function(req, res, next) {
+  res.send(JSON.stringify(counts))
+});
+
+router.post('/counts',async function(req, res, next) {
+  req.on('data', (d) => {
+    count = JSON.parse(d)
+    res.status(200).end()
+  })
+});
+
 /* GET experiment page. */
 router.get('/run',async function(req, res, next) {
   k = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? b : a)
   j = JSON.parse(k)
   res.render('experimentview.ejs', {is:j['is'], cs:j['cs']});
+});
+
+router.get('/resend',async function(req, res, next) {
+  res.render('resend.ejs');
 });
 
 /* GET ending page. */
