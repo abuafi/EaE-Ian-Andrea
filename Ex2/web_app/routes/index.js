@@ -24,7 +24,7 @@ router.get('/counts',async function(req, res, next) {
 
 router.post('/counts',async function(req, res, next) {
   req.on('data', (d) => {
-    count = JSON.parse(d)
+    counts = JSON.parse(d)
     res.status(200).end()
   })
 });
